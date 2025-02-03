@@ -1,11 +1,17 @@
-import { StyleSheet, Appearance, Platform, SafeAreaView, ScrollView, FlatList, View, Text, Image } from "react-native";
+import { StyleSheet, Appearance, Platform, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView, FlatList, View, Text, Image } from "react-native";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
 import { useSession } from '../../ctx';
 import { Colors } from '@/constants/Colors';
 import { MENU_ITEMS } from '@/constants/MenuItems'
 import MENU_IMAGES from '@/constants/MenuImages'
+import api from '@/constants/api'
 
 export default function OfferingScreen() {
     const { signOut } = useSession();
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const router = useRouter(); // Use Expo Router for navigation
     const colorScheme = Appearance.getColorScheme()
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
@@ -14,11 +20,43 @@ export default function OfferingScreen() {
     const headerComp = <Text onPress={() => signOut()} style={{ margin:10 }}>Sign Out</Text>
     const footerComp = <Text style={{ color: theme.text }}>End of Menu</Text>
 
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    
+    const fetchData = async () => {
+        try {
+            const response = await api.get('/api/v1/listings/');
+            setData(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const renderItem = ({ item }) => (
+        <TouchableOpacity style={styles.row} onPress={() => {
+            router.push({ pathname: 'offering_details', params:{'id':item.id, 'category':item.category, 'heading':item.heading} })
+            }
+        }>            
+            <View style={styles.menuTextRow}>
+                <Text style={[styles.menuItemTitle, styles.menuItemText]}>{item.category}</Text>
+                <Text style={styles.menuItemText}>{item.heading}</Text>
+            </View>
+            <Image
+                source={MENU_IMAGES[item.id - 1]}
+                style={styles.menuImage}
+            />            
+        </TouchableOpacity>
+    );
     return (
         <Container>
-            
+            {loading ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+            ) : (
             <FlatList
-                data={MENU_ITEMS}
+                data={data}
                 keyExtractor={(item) => item.id.toString()}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.contentContainer}
@@ -27,20 +65,9 @@ export default function OfferingScreen() {
                 ListFooterComponent={footerComp}
                 ListFooterComponentStyle={styles.footerComp}
                 ListEmptyComponent={<Text>No items</Text>}
-                renderItem={({ item }) => (
-                    <View style={styles.row}>
-                        <View style={styles.menuTextRow}>
-                            <Text style={[styles.menuItemTitle, styles.menuItemText]}>{item.title}</Text>
-                            <Text style={styles.menuItemText}>{item.description}</Text>
-                        </View>
-                        <Image
-                            source={MENU_IMAGES[item.id - 1]}
-                            style={styles.menuImage}
-                        />
-                    </View>
-                )}
+                renderItem={renderItem}
             />
-
+            )}
         </Container>
     )
 }
