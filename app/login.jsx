@@ -1,6 +1,6 @@
 import { Button, StyleSheet, TextInput } from "react-native";
 import { Text, View } from "@/components/Themed";
-import { useSession } from "../ctx";
+import { useSession } from "@/login_extras/ctx";
 
 import { useState } from 'react';
 

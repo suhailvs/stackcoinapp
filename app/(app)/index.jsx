@@ -1,7 +1,7 @@
 import { StyleSheet, Appearance, Platform, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView, FlatList, View, Text, Image } from "react-native";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { useSession } from '../../ctx';
+import { useSession } from "@/login_extras/ctx";
 import { Colors } from '@/constants/Colors';
 import { MENU_ITEMS } from '@/constants/MenuItems'
 import MENU_IMAGES from '@/constants/MenuImages'

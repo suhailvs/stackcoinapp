@@ -93,3 +93,15 @@ https://docs.expo.dev/router/reference/authentication/
 `npm i expo-secure-store`
 
 login themes from https://github.com/lumamontes/expo-router-auth
+
+### android build
+
+https://docs.expo.dev/build/setup/
+
+```bash
+$ npm install -g eas-cli
+$ eas login
+$ eas build -p android --profile preview
+```
+
+https://docs.expo.dev/build-reference/apk/
