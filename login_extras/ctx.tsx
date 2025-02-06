@@ -56,15 +56,20 @@ export function SessionProvider({ children }: PropsWithChildren) {
         console.log('Response Data:', error.response.data);
         console.log('Status:', error.response.status);
         console.log('Headers:', error.response.headers);
+        // Server responded with an error (e.g., 400, 401)
+        throw new Error(JSON.stringify(error.response.data) || "Invalid credentials");
       } else if (error.request) {
         // Request was made but no response received
         console.log('No Response:', error.request);
+        // No response received (network error)
+        throw new Error("Network error. Please try again.");
       } else {
         // Something else happened while setting up the request
         console.log('Error Message:', error.message);
+        throw new Error("Something went wrong. Please try again.");
       }
       // console.log('Full Error:', JSON.stringify(error, null, 2)); // Convert error object to JSON
-      throw error;
+      
     }
   };
 

@@ -1,72 +1,53 @@
-import { Button, StyleSheet, TextInput } from "react-native";
-import { Text, View } from "@/components/Themed";
-import { useSession } from "@/login_extras/ctx";
-
 import { useState } from 'react';
+import { StyleSheet, View, Text } from "react-native";
+import InputText from "@/components/InputText";
+import Button from "@/components/Button";
+import ErrorMessage from "@/components/ErrorMessage";
+import { useSession } from "@/login_extras/ctx";
 
 export default function Login() {
   const { signIn } = useSession();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    signIn(username, password);
+  const handleLogin = async () => {
+    
+    setError("");  // Clear previous errors
+    setLoading(true);
+    
+    try {
+      const userData = await signIn(username, password);      
+    } catch (err) {
+      setError(err.message); // Show error message
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to StackCoin! 🌈 </Text>
-      <Text style={styles.paragraph}>
-      There are many ways of exchanging what we have and 
-      can do for the things we need. 'Money' is just one 
-      of them. The internet revolution has brought us new 
-      ways of exchanging things, without the unnecessary 
-      step of acquiring money first.
-      </Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+       
+      <InputText
+        placeholder="Enter your username"
+        icon="account"
+        onChangeText={setUsername}
       />
-      <TextInput onChangeText={setUsername} placeholder="Username" style={styles.input} />
-      <TextInput
-        onChangeText={setPassword} 
-        placeholder="Password"
+      <InputText
+        placeholder="Enter your password"
+        icon="key-outline"
+        onChangeText={setPassword}
         secureTextEntry
-        style={styles.input}
       />
-      <Button title="Login" onPress={handleLogin} />
+      
+      <ErrorMessage message={error} onClose={() => setError("")} />
+      <Button title="Login" onPress={handleLogin} isLoading={loading} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    textAlign: "center",
-  },
-
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  input: {
-    width: "80%",
-    borderWidth: 1,
-    borderColor: "#000",
-    padding: 10,
-    margin: 10,
-    borderRadius: 4,
-  },
+  container: { flex: 1, backgroundColor: "#f5f5f5", padding: 20, justifyContent:"center" },  
+  error: { color: "red", marginBottom: 10 },
 });
