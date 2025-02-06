@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { useSession } from "@/login_extras/ctx";
 import { Colors } from '@/constants/Colors';
-import { MENU_ITEMS } from '@/constants/MenuItems'
 import MENU_IMAGES from '@/constants/MenuImages'
 import api from '@/constants/api'
 
@@ -37,7 +36,7 @@ export default function OfferingScreen() {
     };
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.row} onPress={() => {
-            router.push({ pathname: 'offering_details', params:{'id':item.id, 'category':item.category, 'heading':item.heading} })
+            router.push({ pathname: 'screens/offering_details', params:{'id':item.id, 'category':item.category, 'heading':item.heading} })
             }
         }>            
             <View style={styles.menuTextRow}>
