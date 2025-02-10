@@ -42,7 +42,7 @@ export default function TabLayout() {
         name="users"
         options={{
           title: 'Users',
-          tabBarIcon: ({ color }) => <Icon name="account" size={28} color={color} />,
+          tabBarIcon: ({ color }) => <Icon name="account-group" size={28} color={color} />,
         }}
       />
       <Tabs.Screen
