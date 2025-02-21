@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, Image } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert } from "react-native";
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useSession } from "@/login_extras/ctx";
 
-import Button from "@/components/Button";
+import AccountBalance from "@/components/AccountBalance";
 const transactions = [
   { id: "1", title: "Amazon Order", amount: "-$25.99", date: "Feb 5, 2025" },
   { id: "2", title: "Received from John", amount: "+$50.00", date: "Feb 4, 2025" },
@@ -11,17 +11,25 @@ const transactions = [
 
 export default function HomeScreen() {
   const { signOut } = useSession();
+
+  const handleLogout = () => {
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "Logout", onPress: () => signOut() }, // Replace with actual logout logic
+    ]);
+  };
   return (
     <View style={styles.container}>
-      <Button title="Logout" onPress={signOut} />
       {/* Account Balance */}
-      <View style={styles.balanceCard}>
-        <Text style={styles.balanceText}>Available Balance</Text>
-        <Text style={styles.balanceAmount}>$1,250.75</Text>
-      </View>
+      <AccountBalance />
+      
 
       {/* Quick Actions */}
       <View style={styles.quickActions}>
+        <TouchableOpacity style={styles.actionButton} onPress={handleLogout}>
+          <MaterialCommunityIcons name="logout" size={28} color="#FF9900" />
+          <Text style={styles.actionText}>Logout</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
           <Ionicons name="send" size={28} color="#FF9900" />
           <Text style={styles.actionText}>Send Money</Text>
@@ -59,10 +67,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", padding: 20 },
   
-  balanceCard: { backgroundColor: "#FF9900", padding: 20, borderRadius: 15, alignItems: "center", marginBottom: 20 },
-  balanceText: { color: "#fff", fontSize: 16, fontWeight: "500" },
-  balanceAmount: { color: "#fff", fontSize: 32, fontWeight: "bold", marginTop: 5 },
-
   quickActions: { flexDirection: "row", justifyContent: "space-around", marginBottom: 20 },
   actionButton: { alignItems: "center" },
   actionText: { marginTop: 5, fontSize: 14, fontWeight: "500", color: "#333" },

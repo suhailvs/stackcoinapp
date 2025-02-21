@@ -1,13 +1,13 @@
 import { StyleSheet, Appearance, Platform, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView, FlatList, View, Text, Image } from "react-native";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { useSession } from "@/login_extras/ctx";
+
 import { Colors } from '@/constants/Colors';
 import MENU_IMAGES from '@/constants/MenuImages'
 import api from '@/constants/api'
 
 export default function OfferingScreen() {
-    const { signOut } = useSession();
+    
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter(); // Use Expo Router for navigation
@@ -16,7 +16,7 @@ export default function OfferingScreen() {
     const styles = createStyles(theme, colorScheme)
     const Container = Platform.OS === 'web' ? ScrollView : SafeAreaView;
     const separatorComp = <View style={styles.separator} />
-    const headerComp = <Text onPress={() => signOut()} style={{ margin:10 }}>Sign Out</Text>
+    const headerComp = <Text style={{ margin:10, fontSize:24 }}>All Offerings</Text>
     const footerComp = <Text style={{ color: theme.text }}>End of Menu</Text>
 
 
