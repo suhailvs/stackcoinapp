@@ -37,7 +37,7 @@ export function useSession() {
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
   if (session) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${session}`;
+    api.defaults.headers.common['Authorization'] = `Token ${session}`;
   }
   
   // Sign-in function
@@ -48,7 +48,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       console.log(response.data);
       const token = response.data.key;
       setSession(token); // Store token securely
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Token ${token}`;
       router.replace("/");
     } catch (error:any) {
       if (error.response) {

@@ -1,37 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons"; // Eye icon
 
 import api from '@/constants/api'
 
 const AccountBalance = () => {
-  const [balance, setBalance] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [showAmount, setShowAmount] = useState(false);
-  const amount = "₹12,345.67"; // Example amount
+  const [balance, setBalance] = useState("****");
   
-//   const fetchBalance = async () => {
-//     setLoading(true);
-//     try {
-//         const response = await api.get('/api/v1/listings/');
-//         setBalance(response.data);
-//     } catch (error) {
-//         console.error('Error fetching data:', error);
-//     } finally {
-//         setLoading(false);
-//     }
-//   };
+  const fetchBalance = async () => {    
+    try {
+        const response = await api.get('/api/v1/user/balance/');
+        setBalance(response.data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Available Balance:</Text>
       
       <View style={styles.amountContainer}>
-        <Text style={styles.amountText}>
-          {showAmount ? `₹${balance}.00` : "****"}
-        </Text>
-        
-        <TouchableOpacity onPress={() => setShowAmount(!showAmount)}>
-          <MaterialIcons name={showAmount ? "visibility-off" : "visibility"} size={24} color="#fff" />
+        <Text style={styles.amountText}>{`₹${balance}`}</Text>        
+        <TouchableOpacity onPress={fetchBalance}>
+          <MaterialIcons name="refresh" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
