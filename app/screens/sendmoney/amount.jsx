@@ -33,15 +33,14 @@ const EnterAmountScreen = () => { // { route, navigation }
       setModalVisible(false); 
       router.replace({ pathname: 'screens/sendmoney/success'});
       // setOffering(response.data);
-    } catch (err) {
+    } catch (error) {
       if (error.response) {
         setError(JSON.stringify(error.response.data)|| "Invalid credentials");
       } else if (error.request) {
         setError("Network error. Please try again.");
       } else {
         setError("Something went wrong. Please try again.");
-      }
-      
+      }      
     } finally {
       setLoading(false);      
     }    
