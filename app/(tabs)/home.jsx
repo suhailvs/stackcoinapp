@@ -17,46 +17,41 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       {/* Account Balance */}
-      <AccountBalance />
-      
+      <AccountBalance />      
 
       {/* Quick Actions */}
       <View style={styles.quickActions}>
         <TouchableOpacity style={styles.actionButton} onPress={handleLogout}>
-          <MaterialCommunityIcons name="logout" size={28} color="#FF9900" />
+          <MaterialCommunityIcons name="logout" size={40} color="#FF9900" />
           <Text style={styles.actionText}>Logout</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton} onPress={() => {
             router.push({ pathname: 'screens/sendmoney/contact' })
             }
         }>
-          <Ionicons name="send" size={28} color="#FF9900" />
+          <Ionicons name="send" size={40} color="#FF9900" />
           <Text style={styles.actionText}>Send Money</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity style={styles.actionButton}>
-          <Ionicons name="add-circle-outline" size={28} color="#FF9900" />
-          <Text style={styles.actionText}>Add Money</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <MaterialCommunityIcons name="qrcode-scan" size={28} color="#FF9900" />
-          <Text style={styles.actionText}>Scan QR</Text>
-        </TouchableOpacity> */}
       </View>
 
-      
-
+      <View style={styles.quickActions}>
+        <TouchableOpacity style={styles.actionButton}>
+          <Ionicons name="cart" size={40} color="#FF9900" />
+          <Text style={styles.actionText}>My Offerings</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton}>
+          <MaterialCommunityIcons name="shopping" size={40} color="#FF9900" />
+          <Text style={styles.actionText}>My Wants</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
-  
-  quickActions: { flexDirection: "row", justifyContent: "space-around", marginBottom: 20 },
-  actionButton: { alignItems: "center" },
-  actionText: { marginTop: 5, fontSize: 14, fontWeight: "500", color: "#333" },
-
-  
-
-  
+  container: { flex: 1, backgroundColor: "#f8f9fa", padding: 20 },  
+  quickActions: { flexDirection: "row", justifyContent: "space-between",borderRadius: 15, marginBottom: 20, padding: 20, backgroundColor: "#fff", },
+  actionButton: { alignItems: "center", justifyContent: "center", width: 120, },
+  actionText: { fontSize: 14, fontWeight: "500", color: "#333" },
 });
+

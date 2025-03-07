@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   productImage: { width: "100%", height: 300, borderRadius: 10 },
   productTitle: { fontSize: 24, fontWeight: "bold", color: "#232F3E", marginTop: 10, borderBottomWidth: 1, borderBottomColor: "#ddd"},
   productPrice: { fontSize: 20, color: "#FF9900", marginTop: 10 },
-  dateLabel: {fontSize: 16,fontWeight: "bold",color: "#ccc",marginRight: 5,},
+  dateLabel: {fontSize: 16,fontWeight: "bold",color: "gray",marginRight: 5,},
   reviewsContainer: { flexDirection: "row", alignItems: "center", marginTop: 15 },
   reviewsText: { fontSize: 16, color: "#555", marginLeft: 10 },
   buttonContainer: { marginTop: 20, flexDirection: "row", justifyContent: "space-between" },

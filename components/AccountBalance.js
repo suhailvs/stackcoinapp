@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons"; // Eye icon
 import api from '@/constants/api'
 
 const AccountBalance = () => {
-  const [balance, setBalance] = useState("****");
+  const [balance, setBalance] = useState(null);
   
   const fetchBalance = async () => {    
     try {
@@ -21,9 +21,9 @@ const AccountBalance = () => {
       <Text style={styles.label}>Available Balance:</Text>
       
       <View style={styles.amountContainer}>
-        <Text style={styles.amountText}>{`₹${balance}`}</Text>        
+        <Text style={[styles.amountText, balance>0 ? styles.positive : styles.negative]}>{balance ? `₹${balance.toFixed(2)}`:'****'}</Text>        
         <TouchableOpacity onPress={fetchBalance}>
-          <MaterialIcons name="refresh" size={24} color="#fff" />
+          <MaterialIcons name="refresh" size={24} color="gray" />
         </TouchableOpacity>
       </View>
     </View>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff", // Amazon Pay Theme
     padding: 20,
-    marginBottom: 50,
+    marginBottom: 20,
   },
   label: {
     fontSize: 16,
@@ -48,21 +48,20 @@ const styles = StyleSheet.create({
   amountContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FF9900",
+    backgroundColor: "#fff",
     padding: 10,
+    borderStyle: 'solid',
+    borderColor: "gray",
+    borderWidth: 1,
     borderRadius: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 3, // Android shadow
   },
   amountText: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: "bold",
-    color: "#fff",
     marginRight: 10,
   },
+  positive: { color: "#2E7D32" },
+  negative: { color: "#D32F2F" }, 
 });
 
 export default AccountBalance;

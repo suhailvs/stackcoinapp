@@ -60,8 +60,8 @@ const AddListingScreen = () => {
     setLoadingDetails(true);
     let url = "https://shihas.stackschools.com/ajax/stackcoinai/"; 
     try {
-      const response = await axios.get(`${url}?details=${heading}`);
-      // const response = await {data: 'This is a Dummy detail for testing purpose'};
+      // const response = await axios.get(`${url}?details=${heading}`);
+      const response = await {data: 'This is a Dummy detail for testing purpose'};
       setDetails(response.data);
       setShowDetails(true);
     } catch (error) {
