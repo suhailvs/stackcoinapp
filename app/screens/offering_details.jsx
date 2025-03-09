@@ -19,7 +19,7 @@ const OfferingDetailPage = ( ) => {
 
   const fetchData = async () => {
       try {
-          const response = await api.get(`/api/v1/listings/${id}/`);
+          const response = await api.get(`/listings/${id}/`);
           setOffering(response.data);
       } catch (error) {
           console.error('Error fetching data:', error);

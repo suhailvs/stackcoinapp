@@ -44,7 +44,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const signIn = async (username: string, password: string) => {
     console.log(username);
     try {
-      const response = await api.post('/dj-rest-auth/login/', { username, password });
+      const response = await api.post('/login/', { username, password });
       console.log(response.data);
       const token = response.data.key;
       setSession(token); // Store token securely

@@ -21,7 +21,7 @@ const Users = ({page}) => {
 
   const fetchData = async () => {
     try {
-        const response = await api.get('/api/v1/users/');
+        const response = await api.get('/users/');
         setData(response.data);
     } catch (error) {
         console.error('Error fetching data:', error);

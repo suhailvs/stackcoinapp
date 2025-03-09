@@ -25,7 +25,7 @@ const EnterAmountScreen = () => { // { route, navigation }
     setError("");  // Clear previous errors
     setLoading(true);
     try {
-      const response = await api.post('/api/v1/transactions/',{
+      const response = await api.post('/transactions/',{
         user: id,
         amount: amount,
         message: message

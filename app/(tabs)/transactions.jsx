@@ -22,7 +22,7 @@ export default function TransactionScreen (){
 
   const fetchData = async () => {
       try {
-          const response = await api.get('/api/v1/transactions/');
+          const response = await api.get('/transactions/');
           setData(response.data);
       } catch (error) {
           console.error('Error fetching data:', error);

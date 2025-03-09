@@ -9,7 +9,7 @@ const AccountBalance = () => {
   
   const fetchBalance = async () => {    
     try {
-        const response = await api.get('/api/v1/user/balance/');
+        const response = await api.get('/user/balance/');
         setBalance(response.data);
     } catch (error) {
         console.error('Error fetching data:', error);

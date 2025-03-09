@@ -40,7 +40,7 @@ const AddListingScreen = () => {
     formData.append("rate", rate);
     formData.append("listing_type", ltype);
     try {
-      const response = await api.post('/api/v1/listings/',formData,{headers: { "Content-Type": "multipart/form-data" }});
+      const response = await api.post('/listings/',formData,{headers: { "Content-Type": "multipart/form-data" }});
       router.replace({ pathname: '/'});
     } catch (error) {
       if (error.response) {
