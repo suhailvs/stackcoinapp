@@ -63,17 +63,17 @@ const OfferingDetailPage = ( ) => {
       ) : (
         <View>
           {/* Product Title and Price */}
-          <Text style={styles.productTitle}>{offering.heading}</Text>
+          <Text style={styles.productTitle}>{offering.title}</Text>
           <Text style={styles.productPrice}>₹{offering.rate}</Text>
           {/* Formatted Date */}
           <Text style={styles.dateLabel}>Added on: {formatDate(offering.created_at)}</Text>
           {/* Product Image   */}
           <View style={styles.imageContainer}>
-            <Image source={{ uri: offering.img }} style={styles.productImage} />
+            <Image source={{ uri: offering.image }} style={styles.productImage} />
           </View>
           
           {/* Product Description */}          
-          <Markdown>{offering.detail}</Markdown>
+          <Markdown>{offering.description}</Markdown>
 
           {/* Reviews 
           <View style={styles.reviewsContainer}>
@@ -87,7 +87,7 @@ const OfferingDetailPage = ( ) => {
             
             <Text style={styles.advertiserTitle}>{offering.user.first_name}</Text>
             <Text style={[offering.user.amount > 0 ? styles.positive : styles.negative]}>
-              Balance: ₹{offering.user.amount} Rs
+              Balance: ₹{offering.user.balance} Rs
             </Text>
             <Text style={styles.advertiserDate}>Last login: {formatDate(offering.user.last_login)}</Text>
                

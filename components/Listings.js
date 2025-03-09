@@ -41,10 +41,10 @@ export default function Listings({ltype}) {
         }>            
             <View style={styles.menuTextRow}>
                 <Text style={[styles.menuItemTitle, styles.menuItemText]}>{item.category}</Text>
-                <Text style={styles.menuItemText}>{item.heading}</Text>
+                <Text style={styles.menuItemText}>{item.title}</Text>
             </View>
             <Image
-                source={{uri: item.img}}
+                source={{uri: item.image}}
                 style={styles.menuImage}
             />            
         </TouchableOpacity>
