@@ -31,7 +31,7 @@ const EnterAmountScreen = () => { // { route, navigation }
         message: message
       });
       setModalVisible(false); 
-      router.replace({ pathname: 'screens/sendmoney/success'});
+      router.replace({ pathname: 'screens/sendmoney/success',params: {name:first_name, amount:amount } });
       // setOffering(response.data);
     } catch (error) {
       if (error.response) {
@@ -47,15 +47,12 @@ const EnterAmountScreen = () => { // { route, navigation }
   };
   return (
     <View style={styles.container}>
-      {/* Header */}
-     
-
       {/* Contact Info */}
       <View style={styles.contactContainer}>
-        <Icon name="account-circle" size={50} color="#232F3E" />
+        <Icon name="account-circle" size={50} color="#4285F4" />
         <View>
           <Text style={styles.contactName}>{first_name} ({username})</Text>
-          <Text style={styles.contactDetails}>Send money OpenLETS</Text>
+          <Text style={styles.contactDetails}>Send money on LETS</Text>
         </View>
       </View>
 
@@ -73,31 +70,29 @@ const EnterAmountScreen = () => { // { route, navigation }
       </View>
 
       {/* Message Input */}
-      <View style={styles.messageContainer}>
-        <Icon name="message-text-outline" size={20} color="#555" />
-        <TextInput
-          style={styles.messageInput}
-          placeholder="Add a message (optional)"
-          value={message}
-          onChangeText={setMessage}
-        />
-      </View>
+      <TextInput
+        style={styles.messageInput}
+        placeholder="Add a note (optional)"
+        value={message}
+        onChangeText={setMessage}
+      />
 
-      {/* Proceed Button */}      
+      {/* Proceed Button */}
       <TouchableOpacity style={styles.proceedButton} onPress={handleProceed}>
-        <Text style={styles.proceedButtonText}>Proceed</Text>
+        <Text style={styles.proceedButtonText}>Pay ₹{amount || "0"}</Text>
       </TouchableOpacity>
 
-      {/* Custom Modal for Alert */}
-      <Modal transparent={true} animationType="slide" visible={modalVisible}>
+      {/* Confirmation Modal */}
+      <Modal transparent={true} animationType="fade" visible={modalVisible}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Icon name="check-circle" size={60} color="#FF9900" />
+            <Icon name="check-circle" size={60} color="#34A853" />
             <Text style={styles.modalTitle}>Confirm Payment</Text>
-            <Text style={styles.modalText}>Send ₹{amount} to {first_name} ({username})?</Text>
+            <Text style={styles.modalText}>Pay ₹{amount} to {first_name} ({username})?</Text>
             {message ? <Text style={styles.modalMessage}>"{message}"</Text> : null}
             <ErrorMessage message={error} onClose={() => setError("")} />
-            {/* Buttons */}
+            
+            {/* Modal Buttons */}
             <View style={styles.modalButtons}>
               <Button title="Cancel" style={styles.cancelButton} onPress={() => setModalVisible(false)} />
               <Button title="Confirm" style={styles.confirmButton} onPress={handleSendMoney} isLoading={loading} />
@@ -109,31 +104,96 @@ const EnterAmountScreen = () => { // { route, navigation }
   );
 };
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f5f5f5", alignItems: "center", paddingHorizontal: 20 },
-  header: { position: "absolute", top: 0, width: "100%", padding: 20, alignItems: "center", borderBottomLeftRadius: 20, borderBottomRightRadius: 20 },
-  headerText: { fontSize: 22, color: "#fff", fontWeight: "bold" },
-  contactContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#fff", padding: 15, borderRadius: 10, width: "100%", marginBottom: 20, shadowOpacity: 0.1 },
-  contactName: { fontSize: 18, fontWeight: "bold", color: "#232F3E", marginLeft: 10 },
-  contactDetails: { fontSize: 14, color: "#555", marginLeft: 10 },
-  amountContainer: { flexDirection: "row", alignItems: "center", margin: 50 },
-  currency: { fontSize: 50, fontWeight: "bold", color: "#232F3E" },
-  amountInput: { fontSize: 50, fontWeight: "bold", color: "#232F3E", borderBottomWidth: 2, borderColor: "#FF9900", width: 200, textAlign: "center" },
-  messageContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#fff", padding: 12, borderRadius: 8, width: "100%", marginBottom: 20 },
-  messageInput: { flex: 1, marginLeft: 10, fontSize: 16 },
-  proceedButton: { backgroundColor: "#FF9900", padding: 15, borderRadius: 8, alignItems: "center", width: "80%" },
+  container: { 
+    flex: 1, 
+    backgroundColor: "#fff", 
+    alignItems: "center", 
+    justifyContent: "center", 
+    paddingHorizontal: 20 
+  },
+  contactContainer: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    backgroundColor: "#F1F3F4", 
+    padding: 15, 
+    borderRadius: 10, 
+    width: "100%", 
+    marginBottom: 30 
+  },
+  contactName: { fontSize: 18, fontWeight: "bold", color: "#000", marginLeft: 10 },
+  contactDetails: { fontSize: 14, color: "#5F6368", marginLeft: 10 },
+  
+  amountContainer: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    marginBottom: 20 
+  },
+  currency: { fontSize: 50, fontWeight: "bold", color: "#000" },
+  amountInput: { 
+    fontSize: 50, 
+    fontWeight: "bold", 
+    color: "#000", 
+    borderBottomWidth: 2, 
+    borderColor: "#4285F4", 
+    width: 200, 
+    textAlign: "left",
+    paddingLeft: 10,
+  },
+
+  messageInput: { 
+    backgroundColor: "#F1F3F4", 
+    padding: 12, 
+    borderRadius: 8, 
+    fontSize: 16, 
+    width: "100%", 
+    marginBottom: 20 
+  },
+
+  proceedButton: { 
+    backgroundColor: "#4285F4", 
+    padding: 15, 
+    borderRadius: 30, 
+    alignItems: "center", 
+    width: "80%", 
+    marginTop: 10 
+  },
   proceedButtonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 
   // Modal Styles
-  modalContainer: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" },
-  modalContent: { backgroundColor: "#fff", padding: 20, borderRadius: 10, alignItems: "center", width: "80%" },
-  modalTitle: { fontSize: 22, fontWeight: "bold", marginTop: 10, color: "#232F3E" },
-  modalText: { fontSize: 18, marginTop: 10, color: "#555" },
-  modalMessage: { fontSize: 16, fontStyle: "italic", marginTop: 5, color: "#777" },
-  modalButtons: { flexDirection: "row", marginTop: 20, justifyContent: "space-between", width: "100%" },
-  cancelButton: { flex: 1, padding: 10, backgroundColor: "#ccc", borderRadius: 5, alignItems: "center", marginRight: 5 },
-  confirmButton: { flex: 1, padding: 10, backgroundColor: "#FF9900", borderRadius: 5, alignItems: "center", marginLeft: 5 },
-  cancelButtonText: { fontSize: 16, fontWeight: "bold", color: "#232F3E" },
-  confirmButtonText: { fontSize: 16, fontWeight: "bold", color: "#fff" },
+  modalContainer: { 
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    backgroundColor: "rgba(0,0,0,0.5)" 
+  },
+  modalContent: { 
+    backgroundColor: "#fff", 
+    padding: 20, 
+    borderRadius: 15, 
+    alignItems: "center", 
+    width: "85%" 
+  },
+  modalTitle: { fontSize: 22, fontWeight: "bold", marginTop: 10, color: "#000" },
+  modalText: { fontSize: 18, marginTop: 10, color: "#5F6368" },
+  modalMessage: { fontSize: 16, fontStyle: "italic", marginTop: 5, color: "#5F6368" },
+  modalButtons: { flexDirection: "row", marginTop: 20, width: "100%" },
+  
+  cancelButton: { 
+    flex: 1, 
+    padding: 12, 
+    backgroundColor: "#DADCE0", 
+    borderRadius: 30, 
+    alignItems: "center", 
+    marginRight: 5 
+  },
+  confirmButton: { 
+    flex: 1, 
+    padding: 12, 
+    backgroundColor: "#34A853", 
+    borderRadius: 30, 
+    alignItems: "center", 
+    marginLeft: 5 
+  },
 });
 
 export default EnterAmountScreen;

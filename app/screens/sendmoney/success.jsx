@@ -1,15 +1,14 @@
-
 import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Animated, Easing, TouchableOpacity } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons"; // Icon for success
-import { router } from "expo-router";
-const PaymentSuccessScreen = ({ navigation }) => {
+import { MaterialIcons } from "@expo/vector-icons";
+import { useLocalSearchParams,useRouter } from 'expo-router';
 
-  // Animation values for fading in and scaling the icon
-  const fadeAnim = useRef(new Animated.Value(0)).current; // For fade-in
-  const scaleAnim = useRef(new Animated.Value(0.5)).current; // For scaling the icon
+const PaymentSuccessScreen = () => {
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Fade-in effect
+  const scaleAnim = useRef(new Animated.Value(0.8)).current; // Scale animation
+  const { name, amount } = useLocalSearchParams();
+  const router = useRouter();
 
-  // Use useEffect to trigger the animations when the screen loads
   useEffect(() => {
     Animated.loop(
     Animated.sequence([
@@ -47,28 +46,26 @@ const PaymentSuccessScreen = ({ navigation }) => {
     ])
   ).start();
   }, [fadeAnim, scaleAnim]);
+
   return (
     <View style={styles.container}>
-      {/* Animated success icon */}
+      {/* Animated Success Icon */}
       <Animated.View style={[styles.iconContainer, { opacity: fadeAnim, transform: [{ scale: scaleAnim }] }]}>
-        <MaterialIcons name="check-circle" size={100} color="#fff" />
+        <MaterialIcons name="check-circle" size={100} color="#34A853" />  
       </Animated.View>
 
-      {/* Animated success message */}
+      {/* Success Message */}
       <Animated.Text style={[styles.title, { opacity: fadeAnim }]}>
-        Payment Successful!
+        Payment Successful
       </Animated.Text>
       <Animated.Text style={[styles.subtitle, { opacity: fadeAnim }]}>
-        Thank you for using OpenLETS.
+        ₹{amount} sent to {name}
       </Animated.Text>
 
-      {/* Back to Home Button */}
-      <TouchableOpacity style={styles.button} onPress={() => { 
-        router.replace("/");
-      }}>      
-        <Text style={styles.buttonText}>Back to Home</Text>
+      {/* Bottom Done Button */}
+      <TouchableOpacity style={styles.button} onPress={() => router.replace("/")}>
+        <Text style={styles.buttonText}>Done</Text>
       </TouchableOpacity>
-      
     </View>
   );
 };
@@ -78,7 +75,7 @@ export default PaymentSuccessScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FF9900", // Amazon Pay Yellow
+    backgroundColor: "#F5F5F5", // Google Pay Light Gray
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
@@ -87,25 +84,31 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#000",
-    marginTop: 20,
+    color: "#202124", // Dark text color
+    marginTop: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: "#222",
-    marginBottom: 30,
+    color: "#5F6368",
+    marginTop: 5,
   },
   button: {
-    backgroundColor: "#000", // Amazon Pay Black
-    borderRadius: 8,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
+    position: "absolute",
+    bottom: 40,
+    backgroundColor: "#4285F4", // Google Blue
+    borderRadius: 24,
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
   },
   buttonText: {
     fontSize: 16,
     color: "#FFF",
+    fontWeight: "bold",
   },
 });
-

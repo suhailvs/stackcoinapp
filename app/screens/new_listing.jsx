@@ -12,12 +12,12 @@ const AddListingScreen = () => {
 
   const router = useRouter();
   const [category, setCategory] = useState(null);
-  const [heading, setHeading] = useState("");
-  const [detail, setDetails] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [rate, setRate] = useState("");
   const [image, setSelectedImage] = useState(null);
-  const [loadingdetails, setLoadingDetails] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);  
+  const [loadingdescription, setLoadingDescription] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);  
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +25,7 @@ const AddListingScreen = () => {
   const categories = ['Electronics',''];
   // Handle Form Submission
   const handleSubmit = async () => {
-    if (!category || !heading || !detail || !rate || !image) {
+    if (!category || !title || !description || !rate || !image) {
       alert("Please fill all fields.");
       return;
     }
@@ -33,10 +33,10 @@ const AddListingScreen = () => {
     setLoading(true);
 
     let formData = new FormData();
-    formData.append("img", {uri: image,name: "upload.jpg",type: "image/jpeg"});
+    formData.append("image", {uri: image,name: "upload.jpg",type: "image/jpeg"});
     formData.append("category", category);
-    formData.append("heading", heading);
-    formData.append("detail", detail);
+    formData.append("title", title);
+    formData.append("description", description);
     formData.append("rate", rate);
     formData.append("listing_type", ltype);
     try {
@@ -57,17 +57,17 @@ const AddListingScreen = () => {
   };
 
   const handleGenerateDetail = async () => {
-    setLoadingDetails(true);
+    setLoadingDescription(true);
     let url = "https://shihas.stackschools.com/ajax/stackcoinai/"; 
     try {
-      // const response = await axios.get(`${url}?details=${heading}`);
-      const response = await {data: 'This is a Dummy detail for testing purpose'};
-      setDetails(response.data);
-      setShowDetails(true);
+      // const response = await axios.get(`${url}?details=${title}`);
+      const response = await {data: 'This is a Dummy description for testing purpose'};
+      setDescription(response.data);
+      setShowDescription(true);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
-      setLoadingDetails(false);
+      setLoadingDescription(false);
     }
   };
 
@@ -75,17 +75,17 @@ const AddListingScreen = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Add a New {ltype==='O'? 'Offering':'Want'}</Text>
       <Dropdown style={styles.input} onChange={setCategory} label="Category" items={categories} />
-      {/* Heading Input */}
-      <TextInput style={styles.input} placeholder="Heading" value={heading} onChangeText={setHeading} />
+      {/* Title Input */}
+      <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle} />
 
-      {showDetails ? (
+      {showDescription ? (
         <View>
-          {/* Details TextArea */}
+          {/* Description TextArea */}
           <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="Details"
-              value={detail}
-              onChangeText={setDetails}
+              placeholder="Description"
+              value={description}
+              onChangeText={setDescription}
               multiline
           />
           {/* Rate Input */}
@@ -98,7 +98,7 @@ const AddListingScreen = () => {
           <ErrorMessage message={error} onClose={() => setError("")} />
           <Button title="Add Listing" style={styles.submitButton} onPress={handleSubmit} isLoading={loading} />
         </View>        
-      ) : (<Button title="Generate detail from heading" onPress={handleGenerateDetail} isLoading={loadingdetails} />)}
+      ) : (<Button title="Generate description from title" onPress={handleGenerateDetail} isLoading={loadingdescription} />)}
 
       {/* These 3 text boxes are to add some margin Bottom */}
       <Text></Text>

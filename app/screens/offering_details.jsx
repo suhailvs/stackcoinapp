@@ -86,7 +86,7 @@ const OfferingDetailPage = ( ) => {
             <Text style={styles.advertiserItem}>Advertiser Details:</Text>
             
             <Text style={styles.advertiserTitle}>{offering.user.first_name}</Text>
-            <Text style={[offering.user.amount > 0 ? styles.positive : styles.negative]}>
+            <Text style={[offering.user.balance > 0 ? styles.positive : styles.negative]}>
               Balance: ₹{offering.user.balance} Rs
             </Text>
             <Text style={styles.advertiserDate}>Last login: {formatDate(offering.user.last_login)}</Text>

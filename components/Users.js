@@ -40,35 +40,43 @@ const Users = ({page}) => {
         </View>
       ) : (
         <View>
-        <Text style={styles.title}>{page}</Text>
-        <View style={{padding: 20}}>      
+          {/* Title */}
+          <Text style={styles.title}>{page}</Text>
+
+          {/* Search Bar */}
+          <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchBar}
-              placeholder="Search contacts..."
+              placeholder="Search users..."
               value={search}
               onChangeText={setSearch}
             />
-        </View>
-      
-        <FlatList
-          data={filteredContacts}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.contactItem}>
-              <TouchableOpacity style={styles.contactInfo} onPress={() => {
-                  router.push({ pathname: 'screens/sendmoney/amount', params:{'id':item.id, 'username':item.username, 'first_name':item.first_name} })
-                  }
-              }>     
-                <MaterialIcons name="account-circle" size={50} color="#ccc" />
-                <View>
+          </View>
+
+          {/* User List */}
+          <FlatList
+            data={filteredContacts}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity 
+                style={styles.contactItem} 
+                onPress={() => router.push({ pathname: 'screens/sendmoney/amount', params: { id: item.id, username: item.username, first_name: item.first_name } })}
+              >
+                {/* User Avatar */}
+                {item.profile_picture ? (
+                  <Image source={{ uri: item.profile_picture }} style={styles.avatar} />
+                ) : (
+                  <MaterialIcons name="account-circle" size={50} color="#ccc" />
+                )}
+
+                {/* User Info */}
+                <View style={styles.contactInfo}>
                   <Text style={styles.contactName}>{item.first_name}</Text>
-                  <Text style={styles.contactPhone}>{item.username}</Text>
-                  <Text style={styles.contactPhone}>amount: {item.amount}</Text>
+                  <Text style={styles.contactDetails}>{item.username} • Balance: {item.balance}</Text>
                 </View>
               </TouchableOpacity>
-            </View>
-          )}
-        />
+            )}
+          />
         </View>
     )}
     </View>
@@ -80,37 +88,51 @@ export default Users;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#000",
-    marginBottom: 15,
+    color: "#000",  // WhatsApp header color
     textAlign: "center",
+    paddingVertical: 15,
+  },
+  searchContainer: {
+    paddingHorizontal: 15,
+    paddingBottom: 10,
   },
   searchBar: {
-    backgroundColor: "#ccc",
-    padding: 10,
-    borderRadius: 8,
+    backgroundColor: "#f0f0f0",
+    padding: 12,
+    borderRadius: 10,
     fontSize: 16,
-    marginBottom: 15,
   },
- 
-  contactItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: "#ddd" },
-  contactInfo: {
+  contactItem: {
     flexDirection: "row",
     alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  contactInfo: {
+    marginLeft: 12,
+    flex: 1,
   },
   contactName: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#666",
-    marginLeft: 10,
+    color: "#000",
   },
-  contactPhone: {
+  contactDetails: {
     fontSize: 14,
-    color: "#ccc",
-    marginLeft: 10,
+    color: "#666",
+    marginTop: 2,
   },
   
 });
