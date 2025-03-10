@@ -45,7 +45,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
     console.log(username);
     try {
       const response = await api.post('/login/', { username, password });
-      console.log(response.data);
+      // console.log(response.data);
       const token = response.data.key;
       setSession(token); // Store token securely
       api.defaults.headers.common['Authorization'] = `Token ${token}`;
