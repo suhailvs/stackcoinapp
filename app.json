@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "stackcoinapp",
-    "slug": "stackcoinapp",
-    "version": "1.0.0",
+    "name": "LETS",
+    "slug": "lets",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/lets-icon.png",
     "scheme": "myapp",
@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/lets-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.suhailvs.stackcoinapp"
+      "package": "com.suhailvs.lets"
     },
     "web": {
       "bundler": "metro",
@@ -43,8 +43,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "23873314-341c-4c5f-a488-97553f9900d9"
+        "projectId": "a9585cc2-2612-48e2-810e-d4c35192566a"
       }
-    }
+    },
+    "owner": "suhailvs"
   }
 }
